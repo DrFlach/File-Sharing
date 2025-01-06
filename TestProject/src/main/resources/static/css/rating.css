@@ -1,0 +1,106 @@
+.rating-section {
+    flex: 1;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.rating-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.stars {
+    display: inline-flex;
+    gap: 5px;
+    margin-bottom: 12px;
+    direction: ltr; /* Убедимся, что направление слева направо */
+}
+
+.star {
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: #ddd;
+}
+
+.star:hover ~ .star {
+    color: #ddd;
+}
+
+.star.active {
+    color: #007BFF;
+}
+
+.rating-stats {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.rating-stats .divider {
+    width: 1px;
+    height: 20px;
+    background: #e2e8f0;
+}
+
+.average-rating {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 5px;
+}
+
+.vote-count {
+    color: #666;
+    font-size: 14px;
+}
+
+#error-message {
+    color: #ef4444;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.remove-rating-btn {
+    background: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.remove-rating-btn:hover {
+    background: #dc3545;
+    color: white;
+}
+
+.rating-section h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+}

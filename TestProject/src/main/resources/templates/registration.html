@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="/css/registration.css">
+</head>
+<body>
+<div class="form-container">
+    <h1>Sign up</h1>
+
+    <div th:if="${registrationError}" class="error">
+        <p th:text="${registrationError}"></p>
+    </div>
+
+    <form th:action="@{/registration}" method="post" th:object="${userEntity}">
+        <div class="input-group">
+            <input th:field="*{username}"
+                   type="text"
+                   id="username"
+                   placeholder="Enter username"
+                   minlength="3"
+                   maxlength="20"
+                   required />
+            <small class="hint">Username must be 3-20 characters long</small>
+        </div>
+
+        <div class="input-group">
+            <input th:field="*{email}"
+                   type="email"
+                   id="email"
+                   placeholder="Enter email"
+                   required
+                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}" />
+            <small class="hint">Enter a valid email address</small>
+        </div>
+
+        <div class="password-container input-group">
+            <input th:field="*{password}"
+                   type="password"
+                   id="password"
+                   placeholder="Enter password"
+                   minlength="8"
+                   required />
+            <button type="button" id="togglePassword">
+                <img src="/images/pokaz.png" alt="pokaz">
+            </button>
+            <small class="hint">Password must be at least 8 characters long, contain at least 6 letters, one uppercase letter, one lowercase letter, and one number</small>
+        </div>
+
+        <button type="submit" class="button1">Sign up</button>
+        <p>Already have an account? <a href="/login">Log in</a></p>
+    </form>
+
+    <div th:if="${successMessage}" class="success">
+        <p th:text="${successMessage}"></p>
+    </div>
+</div>
+<script>
+    const passwordField = document.getElementById('password');
+    const toggleButton = document.getElementById('togglePassword');
+    const form = document.querySelector('form');
+    const showIcon = "/images/pokaz.png";
+    const hideIcon = "/images/skryj.png";
+
+    toggleButton.addEventListener('click', () => {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleButton.querySelector('img').src = hideIcon;
+            toggleButton.querySelector('img').alt = 'skryj';
+        } else {
+            passwordField.type = 'password';
+            toggleButton.querySelector('img').src = showIcon;
+            toggleButton.querySelector('img').alt = 'pokaz';
+        }
+    });
+
+    form.addEventListener('submit', function(event) {
+        const password = passwordField.value;
+        let letterCount = 0;
+        let hasUpperCase = false;
+        let hasLowerCase = false;
+        let hasNumber = false;
+
+        for (let char of password) {
+            if (/[a-z]/.test(char)) {
+                letterCount++;
+                hasLowerCase = true;
+            }
+            if (/[A-Z]/.test(char)) {
+                letterCount++;
+                hasUpperCase = true;
+            }
+            if (/[0-9]/.test(char)) {
+                hasNumber = true;
+            }
+        }
+
+        let errorMessage = [];
+
+        if (letterCount < 6) {
+            errorMessage.push('Password must contain at least 6 letters');
+        }
+        if (!hasUpperCase) {
+            errorMessage.push('Password must contain at least one uppercase letter');
+        }
+        if (!hasLowerCase) {
+            errorMessage.push('Password must contain at least one lowercase letter');
+        }
+        if (!hasNumber) {
+            errorMessage.push('Password must contain at least one number');
+        }
+
+        if (errorMessage.length > 0) {
+            event.preventDefault();
+            alert(errorMessage.join('\n'));
+        }
+    });
+</script>
+</body>
+</html>

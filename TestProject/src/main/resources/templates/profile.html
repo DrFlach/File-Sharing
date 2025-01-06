@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="/css/MenuProfile.css">
+  <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+<!--меню-->
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="dropdown">
+      <button class="dropdown-btn">Menu</button>
+      <div class="dropdown-content">
+        <a th:href="@{/}">Universities</a>
+        <a href="/news">News</a>
+        <a href="/about">About us</a>
+        <a href="/about">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <div class="profile-menu">
+      <div class="profile-btn">
+        <img src="/images/enot.jpg" alt="Profile" class="profile-img">
+        <span class="username" th:text="${#authentication.name}"></span>
+      </div>
+      <div class="profile-dropdown">
+        <a href="/profile">Profile</a>
+        <form th:action="@{/logout}" method="post">
+          <button type="submit" class="logout-btn">Log out</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="profile-container">
+  <div class="profile-header">
+    <img src="/images/enot.jpg" alt="Profile" class="profile-avatar">
+    <div class="profile-info">
+      <h1 class="profile-name" th:text="${user.username}">Username</h1>
+      <p class="profile-role" th:text="${userRole}">Role</p>
+    </div>
+  </div>
+
+  <div class="profile-details">
+    <div class="detail-item">
+      <span class="detail-label">Email</span>
+      <span class="detail-value" th:text="${email}">email@example.com</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Username</span>
+      <span class="detail-value" th:text="${user.username}">Username</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Role</span>
+      <span class="detail-value" th:text="${userRole}">Role</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

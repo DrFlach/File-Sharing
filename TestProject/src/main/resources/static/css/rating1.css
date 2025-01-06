@@ -1,0 +1,85 @@
+/* Rating Section Styles */
+.rating-section {
+    background: var(--background-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.rating-section h3 {
+    margin: 0 0 1rem 0;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+}
+
+/* Rating controls */
+#rating-controls,
+#current-rating-section {
+    margin-bottom: 1rem;
+}
+
+#current-rating-section {
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Stars styling */
+.stars {
+    display: inline-flex;
+    gap: 5px;
+    flex-direction: row;
+}
+
+.star {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.star i,
+.star .fas{
+    color: #ddd;
+    transition: color 0.2s ease;
+}
+
+/* Подсветка до текущей звезды (слева направо) */
+.stars:not(:has(.active)) .star:hover ~ .star i {
+    color: #ddd;
+}
+
+.stars:not(:has(.active)) .star:hover i {
+    color: #ffd700;
+}
+
+.star.active i,
+.star.active .fas{
+    color: #ffd700 !important;
+}
+
+/* Rating statistics */
+.rating-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: var(--background-light);
+    border-radius: var(--radius-md);
+}
+
+.average-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.average-rating .fa-star {
+    color: #fbbf24;
+}
+
+.vote-count {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}

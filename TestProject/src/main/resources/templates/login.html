@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Please Log In</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+        }
+
+        .error, .logout {
+            color: #ff0000;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px 15px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        a {
+            color: #007bff;
+        }
+
+        /* Styles for the password field and button */
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        #togglePassword {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        #togglePassword img {
+            width: 20px; /* Set the image size */
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to the student hut</h1>
+
+    <div class="error" id ="error-message" style="display: none;">
+        Invalid username and password.
+    </div>
+
+<!--    <div class="logout" th:if="${param.logout}">-->
+<!--        You have been logged out.-->
+<!--    </div>-->
+
+    <form id = "login-form">
+        <input type="text" name="username" placeholder="Email" required id = "username"/>
+
+        <!-- Password field wrapped in a container for button positioning -->
+        <div class="password-container">
+            <input type="password" name="password" placeholder="Password" required id="password"/>
+            <button type="button" id="togglePassword"><img src="/images/pokaz.png" alt="pokaz"></button>
+        </div>
+
+        <input type="submit" value="Log in" />
+        <p>Don’t have an account? <a href="/registration">Sign up</a></p>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const passwordField = document.getElementById('password');
+        const toggleButton = document.getElementById('togglePassword');
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+
+        // Toggle password visibility
+        toggleButton.addEventListener('click', () => {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleButton.querySelector('img').src = '/images/skryj.png';
+                toggleButton.querySelector('img').alt = 'skryj';
+            } else {
+                passwordField.type = 'password';
+                toggleButton.querySelector('img').src = '/images/pokaz.png';
+                toggleButton.querySelector('img').alt = 'pokaz';
+            }
+        });
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('jwtToken', data.token); // Сохраняем JWT
+                    localStorage.setItem('username', data.username);
+                    console.log('Token saved:', data.token);
+                    console.log('Token in localStorage:', localStorage.getItem('jwtToken'));
+                    window.location.href = '/?token=' + data.token; // Перенаправляем на главную страницу
+                } else if (response.status === 401) {
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = 'Invalid username or password.';
+                } else {
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = 'An unexpected error occurred. Please try again later.';
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'An error occurred. Please try again.';
+            }
+        });
+    });
+
+    // Utility function for authenticated requests
+    async function fetchWithToken(url, options = {}) {
+        const token = localStorage.getItem('jwtToken');
+
+        const headers = {
+            ...options.headers,
+            'Authorization': `Bearer ${token}`
+        };
+
+        try {
+            const response = await fetch(url, { ...options, headers });
+
+            if (!response.ok) {
+                if (response.status === 401) {
+                    // Token might be expired, redirect to login
+                    window.location.href = '/login';
+                    throw new Error('Unauthorized');
+                }
+                throw new Error('Request failed');
+            }
+
+            return response.json();
+        } catch (error) {
+            console.error('Fetch error:', error);
+            throw error;
+        }
+    }
+</script>
+</body>
+</html>

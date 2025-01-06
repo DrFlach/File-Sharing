@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universities in Poland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/mainPage.css">
+    <link rel="stylesheet" href="/css/MenuProfile.css">
+</head>
+<body>
+<!--<div id = "user-info"></div>-->
+<!--menu-->
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="dropdown">
+            <button class="dropdown-btn">Menu</button>
+            <div class="dropdown-content">
+                <a href="/news">News</a>
+                <a href="/about">About us</a>
+                <a href="/about">Contact</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <div class="profile-menu">
+            <div class="profile-btn">
+                <img src="/images/enot.jpg" alt="Profile" class="profile-img">
+                <span class="username" th:text="${#authentication.name}"></span>
+            </div>
+            <div class="profile-dropdown">
+                <a href="/profile">Profile</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">Log out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+<!--университеты-->
+<div class="container">
+    <h1>Universities in Poland</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="Enter the name of the educational institution" id="searchInput" onkeyup="filterUniversities()">
+    </div>
+
+    <!--Список университетов-->
+    <ul class="university-list" id="universityList">
+        <li class="university-item" data-university-id="3">
+            <div class="university-info">
+                <img class="university-logo" src="/images/san.jpg" alt="SAN">
+                <a href="uni/san" class="university-link">
+                    <span class="university-name">Spółeczna Akademia Nauk</span>
+                </a>
+            </div>
+            <div class="rating-container">
+                <span class="university-rating">0</span>
+            </div>
+        </li>
+        <li class="university-item" data-university-id="1">
+            <div class="university-info">
+                <img class="university-logo" src="/images/polibuda.jpg" alt="Politechnika Łódzka">
+                <a href="uni/polibuda" class="university-link">
+                    <span class="university-name">Politechnika Łódzka</span>
+                </a>
+            </div>
+            <div class="rating-container">
+                <span class="university-rating">0</span>
+            </div>
+        </li>
+        <li class="university-item" data-university-id="2">
+            <div class="university-info">
+                <img class="university-logo" src="/images/ul.png" alt="UL">
+                <a href="uni/ul" class="university-link">
+                    <span class="university-name">Uniwersytet Łódzki</span>
+                </a>
+            </div>
+            <div class="rating-container">
+                <span class="university-rating">0</span>
+            </div>
+        </li>
+        <li class="university-item" data-university-id="4">
+            <div class="university-info">
+                <img class="university-logo" src="/images/ahe.png" alt="AHE">
+                <a href="uni/ahe" class="university-link">
+                    <span class="university-name">AHE</span>
+                </a>
+            </div>
+            <div class="rating-container">
+                <span class="university-rating">0</span>
+            </div>
+        </li>
+        <li class="university-item" data-university-id="5">
+            <div class="university-info">
+                <img class="university-logo" src="/images/SFL.png" alt="sfl">
+                <a href="uni/sfl" class="university-link">
+                    <span class="university-name">Szkola Filmowa w Łodzi</span>
+                </a>
+            </div>
+            <div class="rating-container">
+                <span class="university-rating">0</span>
+            </div>
+        </li>
+
+<!--        тест-->
+<!--        <li class="university-item" data-university-id="1">-->
+<!--            <img class="university-logo" src="/images/polibuda.jpg" alt="Politechnika Łódzka">-->
+<!--            <a href="uni/polibuda"><span class="university-name">Politechnika Łódzka</span></a>-->
+<!--            <span class="university-rating">0</span>-->
+<!--        </li>-->
+<!--        <li class="university-item" data-university-id="2">-->
+<!--            <img class="university-logo" src="/images/ul.png" alt="Uniwersytet Łódzki">-->
+<!--            <a href="uni/ul"><span class="university-name">Uniwersytet Łódzki</span></a>-->
+<!--            <span class="university-rating">0</span>-->
+<!--        </li>-->
+<!--        <li class="university-item" data-university-id="4">-->
+<!--            <img class="university-logo" src="/images/ahe.png" alt="AHE">-->
+<!--            <a href="uni/ahe"><span class="university-name">AHE</span></a>-->
+<!--            <span class="university-rating">0</span>-->
+<!--        </li>-->
+<!--        <li class="university-item" data-university-id="5">-->
+<!--            <img class="university-logo" src="/images/SFL.png" alt="sfl">-->
+<!--            <a href="uni/sfl"><span class="university-name">Szkola Filmowa w Łodzi</span></a>-->
+<!--            <span class="university-rating">0</span>-->
+<!--        </li>-->
+        <!-- другие университеты по аналогии -->
+    </ul>
+</div>
+
+<!--<form th:action="@{/logout}" method="post" style="text-align: center; margin-top: 20px;">-->
+<!--    <input type="submit" value="Logout">-->
+<!--</form>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="/js/ratings-updater.js"></script>
+</body>
+</html>

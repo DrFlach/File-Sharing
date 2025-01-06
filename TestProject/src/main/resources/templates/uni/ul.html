@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main1.css">
+    <link rel="stylesheet" href="/css/rating1.css">
+    <link rel="stylesheet" href="/css/comments1.css">
+    <link rel="stylesheet" href="/css/buttons.css">
+    <link rel="stylesheet" href="/css/MenuProfile.css">
+</head>
+<body>
+<div id="pageData"
+     th:attr="data-page-id=${university.id}"
+     style="display: none;">
+</div>
+<div id="userInfo"
+     th:attr="data-is-admin=${isAdmin},data-user-role=${userRole}"
+     style="display: none;">
+</div>
+<!--меню-->
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="dropdown">
+            <button class="dropdown-btn">Menu</button>
+            <div class="dropdown-content">
+                <a th:href="@{/}">Universities</a>
+                <a href="/news">News</a>
+                <a href="/about">About us</a>
+                <a href="/about">Contact</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <div class="profile-menu">
+            <div class="profile-btn">
+                <img src="/images/enot.jpg" alt="Profile" class="profile-img">
+                <span class="username" th:text="${#authentication.name}"></span>
+            </div>
+            <div class="profile-dropdown">
+                <a href="/profile">Profile</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">Log out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div id="data-container"
+         th:attr="data-university-id=${university.id},
+              data-user-id=${userId}"
+         style="display: none;">
+    </div>
+    <div class="main-info">
+        <div class="logo">
+            <img src="/images/ul.png" alt="logo San">
+        </div>
+
+        <div class="details">
+            <p>UL</p>
+            <ul>
+                <li>Educational materials: 15</li>
+                <li>Teachers: 2 221</li>
+            </ul>
+        </div>
+        <!--        Секция рейтинга-->
+        <div class="rating-section">
+            <h3>University Rating</h3>
+            <div id="rating-controls">
+                <div class="stars">
+                    <span class="star" data-rating="1"><i class="fas fa-star"></i></span>
+                    <span class="star" data-rating="2"><i class="fas fa-star"></i></span>
+                    <span class="star" data-rating="3"><i class="fas fa-star"></i></span>
+                    <span class="star" data-rating="4"><i class="fas fa-star"></i></span>
+                    <span class="star" data-rating="5"><i class="fas fa-star"></i></span>
+                </div>
+            </div>
+            <button class="remove-rating-btn" onclick="removeRating()">
+                <i class="fas fa-times"></i>
+                Remove Rating
+            </button>
+            <div class="rating-stats">
+                <div class="average-rating">
+                    <i class="fas fa-star"></i>
+                    <span id="average-rating">0.00</span>
+                </div>
+                <div class="vote-count">
+                    <span id="vote-count">0</span> votes
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>Educational materials</h2>
+    <div class="materials">
+        <div class="semester" id ="semester-1" onclick="openModal(1)">
+            <p>1 semester</p>
+            <div class="file-list"></div> <!-- тут будут отображаться файлы-->
+        </div>
+        <div class="semester" id ="semester-2"  onclick="openModal(2)">
+            <p>2 semester</p>
+            <div class="file-list"></div> <!-- тут будут отображаться файлы-->
+        </div>
+        <div class="semester" id ="semester-3"  onclick="openModal(3)">
+            <p>3 semester</p>
+            <div class="file-list"></div> <!-- тут будут отображаться файлы-->
+        </div>
+        <div class="semester" id ="semester-4"  onclick="openModal(4)">
+            <p>4 semester</p>
+            <div class="file-list"></div> <!-- тут будут отображаться файлы-->
+            <!--<p>0 files</p>-->
+        </div>
+        <div class="semester" id ="semester-5"  onclick="openModal(5)">
+            <p>5 semester</p>
+            <div class="file-list"></div> <!-- тут будут отображаться файлы-->
+        </div>
+        <div class="semester" id ="semester-6"  onclick="openModal(6)">
+            <p>6 semester</p>
+            <div class="file-list"></div> <!-- тут будут отображаться файлы-->
+        </div>
+        <div class="semester" id ="semester-7"  onclick="openModal(7)">
+            <p>7 semester</p>
+            <div class="file-list"></div> <!-- тут будут отображаться файлы-->
+        </div>
+        <div class="semester" id ="semester-8" onclick="openModal(8)">
+            <p>8 semester</p>
+            <div class="file-list"></div> <!-- тут будут отображаться файлы-->
+        </div>
+        <!-- Добавьте больше семестров по аналогии -->
+    </div>
+</div>
+<!-- Модальное окно -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="semester-number"></span> - Select Faculty and Upload File
+        </div>
+        <div class="modal-body">
+            <form id="uploadForm" action="/files/upload" method="POST" enctype="multipart/form-data">
+                <!-- Скрытое поле для номера семестра -->
+                <input type="hidden" name="semester" id="hiddenSemester" value="" />
+                <input type="hidden" name="universityId" th:value="${university.id}" />
+                <!-- Секция для выбора факультета -->
+                <div>
+                    <label for="faculty">Select Faculty:</label>
+                    <select name="faculty" id="faculty" required>
+                        <option value="Informatyka">Informatyka</option>
+                        <option value="Zarządzanie">Zarządzanie</option>
+                        <option value="Ekonomia">Ekonomia</option>
+                        <option value="Prawo">Prawo</option>
+                    </select>
+                </div>
+
+                <!-- Секция для выбора файла -->
+                <div>
+                    <label for="file">Choose file:</label>
+                    <input type="file" name="file" id="file" required />
+                </div>
+            </form>
+            <!-- Секция для отображения списка загруженных файлов -->
+            <div id="uploaded-files">
+                <h3>Uploaded Files:</h3>
+                <div id="faculty-groups">
+                    <div id="file-list-container">
+                        <ul>
+                            <li style="display: flex; align-items: center;">
+                                <span style="margin-right: 10px;">example-file.pdf</span>
+                                <img
+                                        src="/images/download.png"
+                                        alt="Download"
+                                        style="cursor: pointer; width: 20px; vertical-align: middle;"
+                                        onclick="downloadFile('example-file.pdf')"
+                                />
+                            </li>
+                            <!-- Список заполняется динамически через JS -->
+                        </ul>
+                    </div>
+                    <!-- Сюда будут динамически добавляться группы файлов по факультетам -->
+                </div>
+            </div>
+            <!-- Секция для отображения содержимого файла -->
+            <div id="modal-content">
+                <!-- Сюда будет добавляться содержимое файла -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="add-btn"
+                    type="button"
+                    onclick="submitForm()"
+                    style="display: none;"
+                    id="addFileButton">Add File</button>
+        </div>
+    </div>
+</div>
+
+<!--комментарии-->
+<div class="comments-section">
+    <div class="comment-form">
+        <textarea id="commentContent" placeholder="Write a comment..."></textarea>
+        <button  id="sendCommentBtn">Send</button>
+    </div>
+
+    <div id="commentsList">
+        <div class="comment" th:each="comment : ${comments}" th:id="'comment-' + ${comment.id}">
+            <div class="comment-header">
+                <div class="comment-info">
+                    <span class="username" th:text="${comment.username}"></span>
+                    <span class="date" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm:ss')}"></span>
+                </div>
+                <div th:if="${isAdmin}" class="comment-actions">
+                    <button class="delete-btn" th:onclick="'deleteComment(' + ${comment.id} + ')'">
+                        <svg class="delete-icon" viewBox="0 0 24 24">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="comment-content" th:text="${comment.content}"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="/js/rating.js"></script>
+<script src="/js/files.js"></script>
+<script src="/js/comments.js"></script>
+</body>
+</html>
