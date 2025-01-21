@@ -34,7 +34,7 @@ Spring Data JPA
 
 
 WebSocket for real-time features
-MySQL/PostgreSQL (specify your database)
+MySQL
 
 Frontend
 
