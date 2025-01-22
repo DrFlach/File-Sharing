@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .contact {
+            position: fixed;
+            bottom: 10px;
+            right: 25px;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact:hover {
+            background-color: rgba(0, 0, 0, 0.85);
+            transform: translateY(-2px);
+        }
+
+        .email {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 2px;
+        }
+
+        .email:hover {
+            color: #4A9FFF;
+            border-bottom-color: #4A9FFF;
+        }
+
+        @media (max-width: 480px) {
+            .contact {
+                bottom: 40px;
+                right: 20px;
+                font-size: 1rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<img src="/images/fine1.gif" class="background-image" alt="I'm fine">
+<div class="contact">
+    <p>Developer: Eduard Shanovskiy. Copywrite</p>
+    <p>Contact details</p>
+    <a href="mailto:example@email.com" class="email">124507@student.san.edu.pl</a>
+    <a href="mailto:example@email.com" class="email">testapexmob@gmail.com</a>
+</div>
+</body>
+</html>

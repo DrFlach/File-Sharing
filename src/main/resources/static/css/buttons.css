@@ -1,0 +1,116 @@
+/* Button Styles */
+button {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+/* Rating Remove Button */
+.remove-rating-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ef4444;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.remove-rating-btn:hover {
+    background: #fecaca;
+}
+
+.remove-rating-btn i {
+    font-size: 0.8rem;
+}
+
+/* Comment Submit Button */
+#sendCommentBtn {
+    background: var(--primary-color);
+    color: white;
+}
+
+#sendCommentBtn:hover {
+    background: var(--secondary-color);
+}
+
+/* Modal Buttons */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.close-btn {
+    background: #e5e7eb;
+    color: var(--text-primary);
+}
+
+.close-btn:hover {
+    background: #d1d5db;
+}
+
+.add-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.add-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* File Upload Form Buttons */
+#uploadForm button {
+    background: var(--primary-color);
+    color: white;
+    margin-top: 1rem;
+}
+
+#uploadForm button:hover {
+    background: var(--secondary-color);
+}
+
+/* File upload styling */
+.file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.custom-file-input {
+    display: none;
+}
+
+.custom-file-label {
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.custom-file-label:hover {
+    background: #2563eb;
+}
+
+.selected-file {
+    color: #4b5563;
+    font-size: 0.875rem;
+    margin-left: 0.5rem;
+}
+
+/* Скрываем элемент если нет прав */
+.file-upload-wrapper.hidden {
+    display: none;
+}
