@@ -12,12 +12,14 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             text-align: center;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
         .container {
@@ -27,6 +29,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 350px;
+            margin-bottom: 40px;
         }
 
         h1 {
@@ -90,8 +93,30 @@
         }
 
         #togglePassword img {
-            width: 20px; /* Set the image size */
+            width: 20px;
             height: 20px;
+        }
+
+        /* Footer styles */
+        .footer {
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+        }
+
+        .footer p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .footer .creator {
+            color: #007bff;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -99,26 +124,28 @@
 <div class="container">
     <h1>Welcome to the student hut</h1>
 
-    <div class="error" id ="error-message" style="display: none;">
+    <div class="error" id="error-message" style="display: none;">
         Invalid username and password.
     </div>
 
-<!--    <div class="logout" th:if="${param.logout}">-->
-<!--        You have been logged out.-->
-<!--    </div>-->
+    <form id="login-form">
+        <input type="text" name="username" placeholder="Email" required id="username"/>
 
-    <form id = "login-form">
-        <input type="text" name="username" placeholder="Email" required id = "username"/>
-
-        <!-- Password field wrapped in a container for button positioning -->
         <div class="password-container">
             <input type="password" name="password" placeholder="Password" required id="password"/>
             <button type="button" id="togglePassword"><img src="/images/pokaz.png" alt="pokaz"></button>
         </div>
 
         <input type="submit" value="Log in" />
-        <p>Don’t have an account? <a href="/registration">Sign up</a></p>
+        <p>Don't have an account? <a href="/registration">Sign up</a></p>
     </form>
+</div>
+
+<!-- Added footer -->
+<div class="footer">
+    <hr>
+    <p>© 2025 StudenckaBrygada</p>
+    <p>Created by <span class="creator">Shanovskiy Eduard</span></p>
 </div>
 
 <script>
@@ -159,11 +186,11 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    localStorage.setItem('jwtToken', data.token); // Сохраняем JWT
+                    localStorage.setItem('jwtToken', data.token);
                     localStorage.setItem('username', data.username);
                     console.log('Token saved:', data.token);
                     console.log('Token in localStorage:', localStorage.getItem('jwtToken'));
-                    window.location.href = '/?token=' + data.token; // Перенаправляем на главную страницу
+                    window.location.href = '/?token=' + data.token;
                 } else if (response.status === 401) {
                     errorMessage.style.display = 'block';
                     errorMessage.textContent = 'Invalid username or password.';
@@ -193,7 +220,6 @@
 
             if (!response.ok) {
                 if (response.status === 401) {
-                    // Token might be expired, redirect to login
                     window.location.href = '/login';
                     throw new Error('Unauthorized');
                 }

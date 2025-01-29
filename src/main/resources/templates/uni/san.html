@@ -10,6 +10,36 @@
     <link rel="stylesheet" href="/css/comments1.css">
     <link rel="stylesheet" href="/css/buttons.css">
     <link rel="stylesheet" href="/css/MenuProfile.css">
+    <style>
+        /* Обновленные стили для футера */
+        .footer {
+            position: relative; /* Изменено с absolute на relative */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .footer hr {
+            display: none; /* Убираем hr, так как у нас есть border-top */
+        }
+
+        .footer p {
+            margin: 5px 0;
+            line-height: 1.5;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer .creator {
+            color: #007bff;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
 <div id="pageData"
@@ -222,7 +252,11 @@
         </div>
     </div>
 </div>
-
+<div class="footer">
+    <hr>
+    <p>© 2025 StudenckaBrygada</p>
+    <p>Created by <span class="creator">Shanovskiy Eduard</span></p>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="/js/rating.js"></script>
