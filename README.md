@@ -1,3 +1,7 @@
+## Zastrzeżenie: Poniżej przedstawiam jedynie mój własnoręcznie napisany przykładowy kod backendu oraz mój testowy projekt graficzny strony internetowej, który stworzyłem w ramach mojego zespołu. W rzeczywistym projekcie mogą wystąpić zmiany zarówno w backendzie, jak i we frontendzie.
+
+## Disclaimer: Below, I present only my own written sample backend code and my own test design for the website, which I created within my team. In the actual project, there may be changes in both the backend and the frontend.
+
 # File-Sharing
 A web platform for students to share and access academic notes and materials.
 
